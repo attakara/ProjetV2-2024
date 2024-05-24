@@ -363,7 +363,7 @@ void afficher_relais(char *date_relais) {
     for (int i = 0; i < 4; i++) {
         if (participants_relais[i]) {
             Entrainement *entrainement = &temps_participants[i];
-            char prenom[LONGUEUR_NOM_FICHIER], nom[LONGUEUR_NOM_FICHIER];
+            char prenom[LONGUEUR_NOM_FICHIER];
             sscanf(noms_fichiers_relais[i], "%[^.].txt", prenom);
 
             printf("Participant %d: %s, Temps: %02d:%02d:%02d.%03d\n",
