@@ -23,3 +23,6 @@ Nous avons donc implémenté des fonctions et des messages d’erreurs pour que 
 Il fallait fait en sorte que le code vérifie le format de la date et des dates et qu’il impose des conditions comme nombre d’année supérieur 1000 ou le nombre de mois entre 1 et 12. 
 On devait aussi prendre en compte le fait que l’utilisateur utiliserait des types de variables non adapté dans à la situation. 
 Il était donc important de prendre en compte le maximum d’erreurs.
+
+
+Nous avons principalement à distance, nous nous sommes retrouvés seulement 3 fois tous ensemble pour travailler en physique, le 7, le 14 et le 23 mai.
