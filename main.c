@@ -30,6 +30,8 @@ int main() {
             case 1: {
                 char prenom[LONGUEUR_MAX_NOM], nom[LONGUEUR_MAX_NOM], date[LONGUEUR_MAX_DATE], epreuve[LONGUEUR_MAX_EPREUVE];
                 int temps_h, temps_m, temps_s, temps_ms, position;
+                bool est_valide;
+
 
                 // Demande et vérifie le prénom
                 while (1) {
@@ -51,7 +53,7 @@ int main() {
                 while (1) {
                     printf("Entrez la date (JJ/MM/AAAA): ");
                     scanf("%s", date);
-                    if (verifie_date(date)) break;
+                    if (verifie_date(date)) break; 
                     printf("Erreur: la date doit être au format JJ/MM/AAAA et doit être valide.\n");
                 }
 
@@ -65,10 +67,18 @@ int main() {
 
                 // Demande et vérifie le temps
                 while (1) {
-                    printf("Entrez le temps (h m s ms): ");
-                    scanf("%d %d %d %d", &temps_h, &temps_m, &temps_s, &temps_ms);
-                    if (verifier_format_temps(temps_h, temps_m, temps_s, temps_ms)) break;
-                    printf("Erreur: format de temps invalide.\n");
+                printf("Entrez le temps (h m s ms): ");
+                    int nb_scanned = scanf("%d %d %d %d", &temps_h, &temps_m, &temps_s, &temps_ms);
+
+                    // Assure que 4 entiers ont été correctement lus
+                    if (nb_scanned == 4) {
+                        verifier_format_temps(temps_h, temps_m, temps_s, temps_ms, &est_valide);
+                        if (est_valide) break;
+                        else printf("Erreur: format de temps invalide.\n");
+                    } else {
+                        printf("Erreur: veuillez entrer des chiffres pour h, m, s, et ms.\n");
+                        while (getchar() != '\n'); // Vider le buffer d'entrée
+                    }
                 }
 
                 Sportif sportif;
