@@ -224,8 +224,6 @@ void afficher_statistiques_performance(Sportif *sportif) {
 }
 
 
-#include <dirent.h>
-
 // Structure definitions and constants would go here (omitted for brevity)
 
 void choisir_athletes_pour_JO(char *epreuve) {
