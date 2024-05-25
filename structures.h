@@ -36,4 +36,3 @@ typedef struct {
 } Statistiques;
 
 #endif
-
