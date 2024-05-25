@@ -15,7 +15,7 @@ int verifie_prenom(char *prenom);
 int date_valide(int jour, int mois, int annee);
 int verifie_date(char *date);
 int verifier_epreuve(const char *epreuve);
-int verifier_format_temps(int heures, int minutes, int secondes, int millisecondes);
+void verifier_format_temps(int heures, int minutes, int secondes, int millisecondes, bool *resultat);
 
 
 #endif
