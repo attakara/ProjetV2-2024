@@ -1,6 +1,6 @@
 #ifndef FONCTIONS_H
 #define FONCTIONS_H
-
+#include <stdbool.h>
 #include "structures.h"
 
 void ajouter_donnees_entrainement(Sportif *sportif, Entrainement entrainement);
