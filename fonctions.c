@@ -495,13 +495,14 @@ int verifier_epreuve(const char *epreuve) {
     return 0; // L'épreuve n'existe pas
 }
 
-int verifier_format_temps(int heures, int minutes, int secondes, int millisecondes) {
-    return (heures >= 0 && heures <= 23) &&
-           (minutes >= 0 && minutes <= 59) &&
-           (secondes >= 0 && secondes <= 59) &&
-           (millisecondes >= 0 && millisecondes <= 999);
+void verifier_format_temps(int heures, int minutes, int secondes, int millisecondes, bool *resultat) {
+    if (resultat != NULL) {
+        *resultat = (heures >= 0 && heures <= 23) &&
+                    (minutes >= 0 && minutes <= 59) &&
+                    (secondes >= 0 && secondes <= 59) &&
+                    (millisecondes >= 0 && millisecondes <= 999);
+    }
 }
-
 
 
 
