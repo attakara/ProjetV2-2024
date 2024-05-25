@@ -200,12 +200,29 @@ void afficher_statistiques_performance(Sportif *sportif) {
 
     printf("Statistiques de performance pour %s %s:\n", sportif->prenom, sportif->nom);
     for (int i = 0; i < nombre_epreuves; i++) {
+        int heures_meilleur = (int)stats[i].meilleur_temps / 3600;
+        int minutes_meilleur = ((int)stats[i].meilleur_temps % 3600) / 60;
+        int secondes_meilleur = (int)stats[i].meilleur_temps % 60;
+        int millisecondes_meilleur = (int)(stats[i].meilleur_temps * 100) % 100;
+
+        int heures_pire = (int)stats[i].pire_temps / 3600;
+        int minutes_pire = ((int)stats[i].pire_temps % 3600) / 60;
+        int secondes_pire = (int)stats[i].pire_temps % 60;
+        int millisecondes_pire = (int)(stats[i].pire_temps * 100) % 100;
+
+        double temps_moyen = stats[i].total_temps / stats[i].nombre_courses;
+        int heures_moyen = (int)temps_moyen / 3600;
+        int minutes_moyen = ((int)temps_moyen % 3600) / 60;
+        int secondes_moyen = (int)temps_moyen % 60;
+        int millisecondes_moyen = (int)(temps_moyen * 100) % 100;
+
         printf("\n%s:\n", stats[i].epreuve);
-        printf("\tMeilleur temps: %.2f\n", stats[i].meilleur_temps);
-        printf("\tPire temps: %.2f\n", stats[i].pire_temps);
-        printf("\tTemps moyen: %.2f\n", stats[i].total_temps / stats[i].nombre_courses);
+        printf("\tMeilleur temps: %02d:%02d:%02d.%02d\n", heures_meilleur, minutes_meilleur, secondes_meilleur, millisecondes_meilleur);
+        printf("\tPire temps: %02d:%02d:%02d.%02d\n", heures_pire, minutes_pire, secondes_pire, millisecondes_pire);
+        printf("\tTemps moyen: %02d:%02d:%02d.%02d\n", heures_moyen, minutes_moyen, secondes_moyen, millisecondes_moyen);
     }
 }
+
 
 #include <dirent.h>
 
@@ -263,6 +280,7 @@ void choisir_athletes_pour_JO(char *epreuve) {
         perror("opendir");
     }
 
+    // Tri des athlètes par temps moyen croissant
     for (int i = 0; i < nombre_athletes - 1; i++) {
         for (int j = 0; j < nombre_athletes - i - 1; j++) {
             if (athletes[j].temps_moyen > athletes[j + 1].temps_moyen) {
@@ -275,10 +293,16 @@ void choisir_athletes_pour_JO(char *epreuve) {
 
     printf("\nLes trois meilleurs athlètes pour l'épreuve %s sont:\n", epreuve);
     for (int i = 0; i < 3 && i < nombre_athletes; i++) {
-        printf("\n%s %s avec un temps moyen de %.2f\n", athletes[i].prenom, athletes[i].nom, athletes[i].temps_moyen);
+        double temps_moyen = athletes[i].temps_moyen;
+        int heures = (int)temps_moyen / 3600;
+        int minutes = ((int)temps_moyen % 3600) / 60;
+        int secondes = (int)temps_moyen % 60;
+        int millisecondes = (int)(temps_moyen * 100) % 100;
 
+        printf("\n%s %s avec un temps moyen de %02d:%02d:%02d.%02d\n", athletes[i].prenom, athletes[i].nom, heures, minutes, secondes, millisecondes);
     }
 }
+
 void consulter_performance(Sportif *sportif, char *epreuve, char *date1, char *date2) {
     charger_donnees_entrainement(sportif);
 
@@ -299,21 +323,33 @@ void consulter_performance(Sportif *sportif, char *epreuve, char *date1, char *d
 
     if (temps1 == -1 || temps2 == -1) {
         printf("Les temps pour les dates spécifiées ne sont pas disponibles.\n");
-    return;
+        return;
     }
 
     printf("Comparaison des performances pour %s %s dans l'épreuve %s entre %s et %s:\n", sportif->prenom, sportif->nom, epreuve, date1, date2);
-    printf("Temps à %s: %02d:%02d:%02d.%d\n", date1, (int)temps1 / 3600, ((int)temps1 % 3600) / 60, (int)temps1 % 60, (int)(temps1 * 100) % 100);
-    printf("Temps à %s: %02d:%02d:%02d.%d\n", date2, (int)temps2 / 3600, ((int)temps2 % 3600) / 60, (int)temps2 % 60, (int)(temps2 * 100) % 100);
+    printf("Temps à %s: %02d:%02d:%02d.%02d\n", date1, (int)temps1 / 3600, ((int)temps1 % 3600) / 60, (int)temps1 % 60, (int)(temps1 * 100) % 100);
+    printf("Temps à %s: %02d:%02d:%02d.%02d\n", date2, (int)temps2 / 3600, ((int)temps2 % 3600) / 60, (int)temps2 % 60, (int)(temps2 * 100) % 100);
 
-    if (temps2 < temps1) {
-        printf("L'athlète a progressé.\n");
-    } else if (temps2 > temps1) {
-        printf("L'athlète a régressé.\n");
+    double difference = temps2 - temps1;
+    if (difference < 0) {
+        difference = -difference;
+        int heures = (int)difference / 3600;
+        int minutes = ((int)difference % 3600) / 60;
+        int secondes = (int)difference % 60;
+        int millisecondes = (int)((difference - ((int)difference)) * 100);
+        printf("L'athlète a progressé de %02d:%02d:%02d.%02d.\n", heures, minutes, secondes, millisecondes);
+    } else if (difference > 0) {
+        int heures = (int)difference / 3600;
+        int minutes = ((int)difference % 3600) / 60;
+        int secondes = (int)difference % 60;
+        int millisecondes = (int)((difference - ((int)difference)) * 100);
+        printf("L'athlète a régressé de %02d:%02d:%02d.%02d.\n", heures, minutes, secondes, millisecondes);
     } else {
         printf("L'athlète a maintenu sa performance.\n");
     }
 }
+
+
 
 void afficher_relais(char *date_relais) {
     DIR *dir;
