@@ -24,5 +24,7 @@ Il fallait fait en sorte que le code vérifie le format de la date et des dates 
 On devait aussi prendre en compte le fait que l’utilisateur utiliserait des types de variables non adapté dans à la situation. 
 Il était donc important de prendre en compte le maximum d’erreurs.
 
+Actuellement, pour le cas numero 3, Afficher les statistiques de performance, nous avons du mal à gérer lorsque l'utilisateur rentre une mauvaise information concernant le nom ou le prenom, nous avions du mal à redemander le nom et le prénom alors, nous faisons revenir l'utilisateur au menu principal. 
+
 
 Nous avons principalement à distance, nous nous sommes retrouvés seulement 3 fois tous ensemble pour travailler en physique, le 7, le 14 et le 23 mai.
