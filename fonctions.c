@@ -100,7 +100,7 @@ void charger_donnees_entrainement(Sportif *sportif) {
     FILE *fichier = fopen(nom_fichier, "r");
     if (fichier == NULL) {
         printf("Erreur lors de l'ouverture du fichier %s pour lecture.\n", nom_fichier);
-        //perror("fopen");
+        perror("fopen");
         return;
     }
 
@@ -222,9 +222,6 @@ void afficher_statistiques_performance(Sportif *sportif) {
         printf("\tTemps moyen: %02d:%02d:%02d.%02d\n", heures_moyen, minutes_moyen, secondes_moyen, millisecondes_moyen);
     }
 }
-
-
-// Structure definitions and constants would go here (omitted for brevity)
 
 void choisir_athletes_pour_JO(char *epreuve) {
     Sportif athletes[MAX_ATHLETES]; // Utilisation de la structure Sportif pour stocker les athlètes
