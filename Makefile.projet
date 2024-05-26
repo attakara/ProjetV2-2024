@@ -1,6 +1,5 @@
-all: main
-
-CC = clang
-
+CC=gcc
 main:
-  $(CC) main.c fonctions.c -o main
+	$(CC) $(SRC)main.c $(SRC)fonctions.c -o main
+clean:
+	rm -rf $(SRC)*.o
